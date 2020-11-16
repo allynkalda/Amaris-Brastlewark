@@ -60,6 +60,7 @@ export default function Landing() {
 
     const [ gnomes, setGnomes ] = useState([])
     const [currentPage, setCurrentPage] = useState(0);
+    const [error, setError] = useState('')
 
     const PER_PAGE = 12;
     const offset = currentPage * PER_PAGE;
@@ -84,7 +85,13 @@ export default function Landing() {
                 setGnomes(response.data.Brastlewark);
             }
             })
-            .catch(err => console.log(err))
+            .catch(error => {
+                if (error.response) {
+                    setError(error.response.data);
+                  } else {
+                    setError(error.message);
+                  }
+            })
     };
 
     useEffect(() => {
@@ -142,7 +149,7 @@ export default function Landing() {
                 <Search onClick={handleSearch}/>
             </div>
         <Grid container align="center">
-            {currentPageData}
+            {!error ? currentPageData : error}
         </Grid>
         <ReactPaginate
             previousLabel={"<"}
