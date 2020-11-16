@@ -116,9 +116,9 @@ export default function Landing() {
     
     const pageCount = Math.ceil(gnomes.length / PER_PAGE);
 
-    const clickSearch = (value) => {
+    const handleSearch = (value) => {
         if (value) {
-            const searched = gnomes.filter(item => item.name === value);
+            const searched = gnomes.filter(item => item.name.toLowerCase().includes(value.toLowerCase()));
             setGnomes(searched);
         } else {
             getAllGnomes();
@@ -139,7 +139,7 @@ export default function Landing() {
                     <SelectBy type="age" onChange={selectHair} />
                     <SelectBy type="hair" onChange={selectHair} />
                 </div>
-                <Search onClick={clickSearch}/>
+                <Search onClick={handleSearch}/>
             </div>
         <Grid container align="center">
             {currentPageData}
